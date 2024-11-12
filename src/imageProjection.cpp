@@ -14,7 +14,7 @@ POINT_CLOUD_REGISTER_POINT_STRUCT (VelodynePointXYZIRT,
     (uint16_t, ring, ring) (float, time, time)
 )
 
-struct OusterPointXYZIRT {
+/*struct OusterPointXYZIRT {
     PCL_ADD_POINT4D;
     float intensity;
     uint32_t t;
@@ -28,7 +28,27 @@ POINT_CLOUD_REGISTER_POINT_STRUCT(OusterPointXYZIRT,
     (float, x, x) (float, y, y) (float, z, z) (float, intensity, intensity)
     (uint32_t, t, t) (uint16_t, reflectivity, reflectivity)
     (uint8_t, ring, ring) (uint16_t, noise, noise) (uint32_t, range, range)
+)*/
+
+struct OusterPointXYZIRT  {
+    PCL_ADD_POINT4D;
+    uint32_t t;
+    uint16_t ring;
+    uint32_t range;
+    uint16_t signal;
+    uint16_t reflectivity;
+    uint16_t near_ir;
+    
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+} EIGEN_ALIGN16;
+
+POINT_CLOUD_REGISTER_POINT_STRUCT(OusterPointXYZIRT,
+    (float, x, x) (float, y, y) (float, z, z) (uint32_t, t, t)
+    (uint16_t, ring, ring) (uint32_t, range, range)
+    (uint16_t, signal, signal) (uint16_t, reflectivity, reflectivity) (uint16_t, near_ir, near_ir)
 )
+
+
 
 // Use the Velodyne point format as a common representation
 using PointXYZIRT = VelodynePointXYZIRT;
@@ -248,7 +268,7 @@ public:
                 dst.x = src.x;
                 dst.y = src.y;
                 dst.z = src.z;
-                dst.intensity = src.intensity;
+                dst.intensity = src.signal;
                 dst.ring = src.ring;
                 dst.time = src.t * 1e-9f;
             }
