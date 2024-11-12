@@ -32,6 +32,23 @@ def generate_launch_description():
            description='Navsat transform configuration file'),
         
         params_declare,
+        # Nodo per duplicare /oxts/imu e pubblicare su /new_oxts/imu
+        Node(
+            package='topic_tools',
+            executable='relay',
+            name='relay_imu',
+            arguments=['/oxts/imu', '/oxts/imu_copy'],
+            output='screen'
+        ),
+
+        # Nodo per duplicare /oxts/odometry e pubblicare su /new_oxts/odometry
+        Node(
+            package='topic_tools',
+            executable='relay',
+            name='relay_odometry',
+            arguments=['/oxts/odometry', '/oxts/odometry_copy'],
+            output='screen'
+        ),
         Node(
             package='tf2_ros',
             executable='static_transform_publisher',
@@ -94,11 +111,12 @@ def generate_launch_description():
             #             'broadcast_utm_transform_as_parent_frame': False, 'transform_timeout': 0.0}],
             parameters=[parameter_navsat_file],
             remappings=[
-                ('imu', '/oxts/imu'),
-                ('gps/fix', '/oxts/nav_sat_fix'),
-                ('odometry/filtered', '/oxts/odometry'),
-                ('gps/filtered', 'gps/filtered'),
-                ('odometry/gps', 'odometry/gps'),
+                # Mantenere i topic originali, ma non vengono modificati dai nodi successivi
+                ('imu', '/oxts/imu_copy'),  # Input IMU
+                ('gps/fix', '/oxts/nav_sat_fix'),  # Input GPS
+                ('odometry/filtered', '/oxts/odometry_copy'),  # Input Odometry
+                ('gps/filtered', 'gps/filtered'),  # GPS filtrato (output)
+                ('odometry/gps', 'odometry/gps'),  # Odometry GPS (output)
             ]
         ),
     ])
