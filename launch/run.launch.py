@@ -10,8 +10,10 @@ def generate_launch_description():
 
     share_dir = get_package_share_directory('lio_sam')
     parameter_file = LaunchConfiguration('params_file')
+    parameter_navsat_file = LaunchConfiguration('navsat_transform_file')
     xacro_path = os.path.join(share_dir, 'config', 'robot.urdf.xacro')
-    rviz_config_file = os.path.join(share_dir, 'config', 'rviz2.rviz')
+    #rviz_config_file = os.path.join(share_dir, 'config', 'rviz2.rviz')
+    rviz_config_file = os.path.join(share_dir, 'config', 'base.rviz')
 
     params_declare = DeclareLaunchArgument(
         'params_file',
@@ -22,6 +24,13 @@ def generate_launch_description():
     print("urdf_file_name : {}".format(xacro_path))
 
     return LaunchDescription([
+
+        DeclareLaunchArgument(
+            'navsat_transform_file',
+            default_value=os.path.join(
+               share_dir, 'config', 'navsat_transform.yaml'),
+           description='Navsat transform configuration file'),
+        
         params_declare,
         Node(
             package='tf2_ros',
@@ -73,5 +82,23 @@ def generate_launch_description():
             name='rviz2',
             arguments=['-d', rviz_config_file],
             output='screen'
-        )
+        ),
+        Node(
+            package='robot_localization',
+            executable='navsat_transform_node',
+            name='navsat_transform_node',
+            output='screen',
+            #parameters=[{'frequency': 10.0, 'delay': 0.0,'magnetic_declination_radians': 0.0,
+            #             'yaw_offset': 0.0, 'zero_altitude': False, 'publish_filtered_gps': False,
+            #             'broadcast_utm_transform': False, 'use_odometry_yaw': False, 'wait_for_datum': False,
+            #             'broadcast_utm_transform_as_parent_frame': False, 'transform_timeout': 0.0}],
+            parameters=[parameter_navsat_file],
+            remappings=[
+                ('imu', '/oxts/imu'),
+                ('gps/fix', '/oxts/nav_sat_fix'),
+                ('odometry/filtered', '/oxts/odometry'),
+                ('gps/filtered', 'gps/filtered'),
+                ('odometry/gps', 'odometry/gps'),
+            ]
+        ),
     ])
