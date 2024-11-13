@@ -31,6 +31,8 @@ find_package(GTSAM REQUIRED)
 find_package(Eigen REQUIRED)
 find_package(OpenMP REQUIRED)
 
+find_package(robot_localization REQUIRED)
+
 include_directories(
   include/lio_sam
 )

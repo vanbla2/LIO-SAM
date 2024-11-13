@@ -105,15 +105,15 @@ def generate_launch_description():
             executable='navsat_transform_node',
             name='navsat_transform_node',
             output='screen',
-            #parameters=[{'frequency': 10.0, 'delay': 0.0,'magnetic_declination_radians': 0.0,
-            #             'yaw_offset': 0.0, 'zero_altitude': False, 'publish_filtered_gps': False,
-            #             'broadcast_utm_transform': False, 'use_odometry_yaw': False, 'wait_for_datum': False,
-            #             'broadcast_utm_transform_as_parent_frame': False, 'transform_timeout': 0.0}],
-            parameters=[parameter_navsat_file],
+            parameters=[{'frequency': 50.0, 'delay': 0.0,'magnetic_declination_radians': 0.0,
+                         'yaw_offset': 0.0, 'zero_altitude': False, 'publish_filtered_gps': False,
+                         'broadcast_utm_transform': False, 'use_odometry_yaw': False, 'wait_for_datum': False,
+                         'broadcast_utm_transform_as_parent_frame': False, 'transform_timeout': 0.0}],
+            #parameters=[parameter_navsat_file],
             remappings=[
-                ('imu', '/oxts/imu_copy'),  # Input IMU
+                ('imu', '/oxts/imu'),  # Input IMU
                 ('gps/fix', '/oxts/nav_sat_fix'),  # Input GPS
-                ('odometry/filtered', '/oxts/odometry_copy'),  # Input Odometry
+                ('odometry/filtered', '/oxts/odometry'),  # Input Odometry
                 ('gps/filtered', 'gps/filtered'),  # GPS filtrato (output)
                 ('odometry/gps', 'odometry/gps'),  # Odometry GPS (output)
             ]
