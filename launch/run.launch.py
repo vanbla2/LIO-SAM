@@ -111,7 +111,6 @@ def generate_launch_description():
             #             'broadcast_utm_transform_as_parent_frame': False, 'transform_timeout': 0.0}],
             parameters=[parameter_navsat_file],
             remappings=[
-                # Mantenere i topic originali, ma non vengono modificati dai nodi successivi
                 ('imu', '/oxts/imu_copy'),  # Input IMU
                 ('gps/fix', '/oxts/nav_sat_fix'),  # Input GPS
                 ('odometry/filtered', '/oxts/odometry_copy'),  # Input Odometry
