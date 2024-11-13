@@ -1399,6 +1399,7 @@ public:
 
     void addGPSFactor()
     {
+        std::cout << "Evaluating GNSS factor...\n";
         if (gpsQueue.empty())
             return;
 
@@ -1469,6 +1470,7 @@ public:
                 noiseModel::Diagonal::shared_ptr gps_noise = noiseModel::Diagonal::Variances(Vector3);
                 gtsam::GPSFactor gps_factor(cloudKeyPoses3D->size(), gtsam::Point3(gps_x, gps_y, gps_z), gps_noise);
                 gtSAMgraph.add(gps_factor);
+                std::cout << "Addedd GNSS factor...\n";
 
                 aLoopIsClosed = true;
                 break;
