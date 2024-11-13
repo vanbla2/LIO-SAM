@@ -153,6 +153,7 @@ public:
 
     mapOptimization(const rclcpp::NodeOptions & options) : ParamServer("lio_sam_mapOptimization", options)
     {
+        std::cout << "map optimization start \n"; 
         ISAM2Params parameters;
         parameters.relinearizeThreshold = 0.1;
         parameters.relinearizeSkip = 1;
@@ -505,7 +506,7 @@ public:
     {
         if (loopClosureEnableFlag == false)
             return;
-
+        std::cout << "Loop closure start...\n";    
         rclcpp::Rate rate(loopClosureFrequency);
         while (rclcpp::ok())
         {
@@ -1399,7 +1400,7 @@ public:
 
     void addGPSFactor()
     {
-        std::cout << "Evaluating GNSS factor...\n";
+        //std::cout << "Evaluating GNSS factor...\n";
         if (gpsQueue.empty())
             return;
 
