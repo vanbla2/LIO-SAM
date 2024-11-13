@@ -32,23 +32,6 @@ def generate_launch_description():
            description='Navsat transform configuration file'),
         
         params_declare,
-        # Nodo per duplicare /oxts/imu e pubblicare su /new_oxts/imu
-        Node(
-            package='topic_tools',
-            executable='relay',
-            name='relay_imu',
-            arguments=['/oxts/imu', '/oxts/imu_copy'],
-            output='screen'
-        ),
-
-        # Nodo per duplicare /oxts/odometry e pubblicare su /new_oxts/odometry
-        Node(
-            package='topic_tools',
-            executable='relay',
-            name='relay_odometry',
-            arguments=['/oxts/odometry', '/oxts/odometry_copy'],
-            output='screen'
-        ),
         Node(
             package='tf2_ros',
             executable='static_transform_publisher',

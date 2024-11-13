@@ -70,7 +70,7 @@ public:
             std::bind(&TransformFusion::imuOdometryHandler, this, std::placeholders::_1),
             imuOdomOpt);
 
-        pubImuOdometry = create_publisher<nav_msgs::msg::Odometry>(odomTopic, qos_imu);
+        pubImuOdometry = create_publisher<nav_msgs::msg::Odometry>(odomTopic+"_liosam", qos_imu);
         pubImuPath = create_publisher<nav_msgs::msg::Path>("lio_sam/imu/path", qos);
 
         tfBroadcaster = std::make_unique<tf2_ros::TransformBroadcaster>(this);

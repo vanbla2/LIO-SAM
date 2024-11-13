@@ -5,7 +5,7 @@
 
     pointCloudTopic: "/ouster_sensor_center/points"     # Point cloud data
     imuTopic: "/oxts/imu"                               # IMU data
-    odomTopic: "/oxts/odometry_copy"                    # IMU pre-preintegration odometry, same frequency as IMU
+    odomTopic: "/oxts/odometry"                    # IMU pre-preintegration odometry, same frequency as IMU
     gpsTopic: "Gps"                                     # GPS odometry topic from navsat, see module_navsat.launch file
  
     # Frames
