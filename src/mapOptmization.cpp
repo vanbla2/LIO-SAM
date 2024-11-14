@@ -153,7 +153,6 @@ public:
 
     mapOptimization(const rclcpp::NodeOptions & options) : ParamServer("lio_sam_mapOptimization", options)
     {
-        std::cout << "map optimization start \n"; 
         ISAM2Params parameters;
         parameters.relinearizeThreshold = 0.1;
         parameters.relinearizeSkip = 1;
@@ -506,7 +505,7 @@ public:
     {
         if (loopClosureEnableFlag == false)
             return;
-        std::cout << "Loop closure start...\n";    
+        cout << "Loop closure factor ..." << endl;  
         rclcpp::Rate rate(loopClosureFrequency);
         while (rclcpp::ok())
         {
@@ -1471,7 +1470,7 @@ public:
                 noiseModel::Diagonal::shared_ptr gps_noise = noiseModel::Diagonal::Variances(Vector3);
                 gtsam::GPSFactor gps_factor(cloudKeyPoses3D->size(), gtsam::Point3(gps_x, gps_y, gps_z), gps_noise);
                 gtSAMgraph.add(gps_factor);
-                std::cout << "Addedd GNSS factor...\n";
+                cout << "Adding GPS factor ..." << endl;
 
                 aLoopIsClosed = true;
                 break;

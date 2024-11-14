@@ -5,8 +5,8 @@
 
     pointCloudTopic: "/ouster_sensor_center/points"     # Point cloud data
     imuTopic: "/oxts/imu"                               # IMU data
-    odomTopic: "/oxts/odometry"                    # IMU pre-preintegration odometry, same frequency as IMU
-    gpsTopic: "odometry/gps"                         # GPS odometry topic from navsat, see module_navsat.launch file
+    odomTopic: "/oxts/odometry"                         # IMU pre-preintegration odometry, same frequency as IMU
+    gpsTopic: "odometry/gps"                            # GPS odometry topic from navsat, see module_navsat.launch file
  
     # Frames
 
@@ -17,10 +17,10 @@
  
     # GPS Settings
 
-    useImuHeadingInitialization: true           # if using GPS data, set to "true"
+    useImuHeadingInitialization: true            # if using GPS data, set to "true"
     useGpsElevation: false                       # if GPS elevation is bad, set to "false"
     gpsCovThreshold: 2.0                         # m^2, threshold for using GPS data
-    poseCovThreshold: 25.0                       # m^2, threshold for using GPS data
+    poseCovThreshold: 25.0                       # 25 m^2, threshold for using GPS data
  
     # Export settings
 
@@ -36,16 +36,16 @@
 
     # points. i.e., 16 = 64 / 4, 16 = 16 / 1
 
-    lidarMinRange: 1.0                           # default: 1.0, minimum lidar range to be used
+    lidarMinRange: 3.0                           # default: 1.0, minimum lidar range to be used
     lidarMaxRange: 1000.0                        # default: 1000.0, maximum lidar range to be used
  
     # IMU Settings
 
-    imuAccNoise: 3.9939570888238808e-03
-    imuGyrNoise: 1.5636343949698187e-03
-    imuAccBiasN: 6.4356659353532566e-05
-    imuGyrBiasN: 3.5640318696367613e-05
-    imuGravity: 9.80511
+    imuAccNoise: 3.9939570888238808e-03          #da cambiare
+    imuGyrNoise: 1.5636343949698187e-03          #da cambiare
+    imuAccBiasN: 6.4356659353532566e-05          #da cambiare
+    imuGyrBiasN: 3.5640318696367613e-05          #da cambiare
+    imuGravity: 9.80511                          #da cambiare
 
     imuRPYWeight: 0.01
  
