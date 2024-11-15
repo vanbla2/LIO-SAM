@@ -9,9 +9,9 @@ RUN apt-get update \
     && apt install -y ros-humble-robot-localization \
     && apt install -y ros-humble-robot-state-publisher \
     && apt install -y ros-humble-perception-pcl \
-  	&& apt install -y ros-humble-pcl-msgs \
-  	&& apt install -y ros-humble-vision-opencv \
-  	&& apt install -y ros-humble-xacro \
+    && apt install -y ros-humble-pcl-msgs \
+    && apt install -y ros-humble-vision-opencv \
+    && apt install -y ros-humble-xacro \
     && apt install -y ros-humble-rosbag2-storage-mcap \
     && rm -rf /var/lib/apt/lists/*
 
