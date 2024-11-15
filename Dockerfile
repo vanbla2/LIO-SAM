@@ -20,7 +20,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN mkdir -p ~/catkin_ws/src \
     && cd ~/catkin_ws/src \
-    && git clone https://github.com/TixiaoShan/LIO-SAM.git \
+    && git clone https://github.com/vanbla2/LIO-SAM.git \
     && cd .. \
     && source /opt/ros/kinetic/setup.bash \
     && catkin_make
