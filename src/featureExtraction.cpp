@@ -97,7 +97,7 @@ public:
                             + cloudInfo.point_range[i+5];
 
             cloudCurvature[i] = diffRange*diffRange;//diffX * diffX + diffY * diffY + diffZ * diffZ;
-
+            // non normalizza rispetto i punti del cluster (10) e il range r_i
             cloudNeighborPicked[i] = 0;
             cloudLabel[i] = 0;
             // cloudSmoothness for sorting
@@ -173,7 +173,7 @@ public:
                     if (cloudNeighborPicked[ind] == 0 && cloudCurvature[ind] > edgeThreshold)
                     {
                         largestPickedNum++;
-                        if (largestPickedNum <= 20){
+                        if (largestPickedNum <= 20){ //seleziona massimo 20 punti corner per ogni sottosezione della scansione
                             cloudLabel[ind] = 1;
                             cornerCloud->push_back(extractedCloud->points[ind]);
                         } else {
@@ -203,7 +203,8 @@ public:
                     int ind = cloudSmoothness[k].ind;
                     if (cloudNeighborPicked[ind] == 0 && cloudCurvature[ind] < surfThreshold)
                     {
-
+                        //non seleziona un numero massimo di punti nella subregion, anche perchè le regioni sono divise in "altezza". 
+                        // potremmo non considerare i ring più alti delle scansioni
                         cloudLabel[ind] = -1;
                         cloudNeighborPicked[ind] = 1;
 

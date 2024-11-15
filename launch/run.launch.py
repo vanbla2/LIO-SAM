@@ -13,8 +13,8 @@ def generate_launch_description():
     parameter_navsat_file = LaunchConfiguration('navsat_transform_file')
     xacro_path = os.path.join(share_dir, 'config', 'robot.urdf.xacro')
     #rviz_config_file = os.path.join(share_dir, 'config', 'rviz2.rviz')
-    #rviz_config_file = os.path.join(share_dir, 'config', 'base.rviz')
-    rviz_config_file = os.path.join(share_dir, 'config', 'video.rviz')
+    rviz_config_file = os.path.join(share_dir, 'config', 'base.rviz')
+    #rviz_config_file = os.path.join(share_dir, 'config', 'video.rviz')
 
     params_declare = DeclareLaunchArgument(
         'params_file',
