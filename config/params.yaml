@@ -36,7 +36,7 @@
 
     # points. i.e., 16 = 64 / 4, 16 = 16 / 1
 
-    lidarMinRange: 4.0                           # default: 1.0, minimum lidar range to be used
+    lidarMinRange: 3.0                           # default: 1.0, minimum lidar range to be used
     lidarMaxRange: 150.0                         # default: 1000.0, maximum lidar range to be used
  
     # IMU Settings
@@ -64,7 +64,7 @@
     # LOAM feature threshold
 
     edgeThreshold: 1.0
-    surfThreshold: 0.005                         #default 0.1
+    surfThreshold: 0.1                         #default 0.1
     edgeFeatureMinValidNum: 10
     surfFeatureMinValidNum: 100
  

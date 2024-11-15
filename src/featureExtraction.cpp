@@ -22,10 +22,12 @@ public:
     rclcpp::Publisher<lio_sam::msg::CloudInfo>::SharedPtr pubLaserCloudInfo;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubCornerPoints;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubSurfacePoints;
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubRealSurfacePoints;
 
     pcl::PointCloud<PointType>::Ptr extractedCloud;
     pcl::PointCloud<PointType>::Ptr cornerCloud;
     pcl::PointCloud<PointType>::Ptr surfaceCloud;
+    pcl::PointCloud<PointType>::Ptr RealsurfaceCloud;
 
     pcl::VoxelGrid<PointType> downSizeFilter;
 
@@ -50,7 +52,8 @@ public:
             "lio_sam/feature/cloud_corner", 1);
         pubSurfacePoints = create_publisher<sensor_msgs::msg::PointCloud2>(
             "lio_sam/feature/cloud_surface", 1);
-
+        pubRealSurfacePoints = create_publisher<sensor_msgs::msg::PointCloud2>(
+            "lio_sam/feature/cloud_Realsurface", 1);
         initializationValue();
     }
 
@@ -63,6 +66,7 @@ public:
         extractedCloud.reset(new pcl::PointCloud<PointType>());
         cornerCloud.reset(new pcl::PointCloud<PointType>());
         surfaceCloud.reset(new pcl::PointCloud<PointType>());
+        RealsurfaceCloud.reset(new pcl::PointCloud<PointType>());
 
         cloudCurvature = new float[N_SCAN*Horizon_SCAN];
         cloudNeighborPicked = new int[N_SCAN*Horizon_SCAN];
@@ -147,9 +151,11 @@ public:
     {
         cornerCloud->clear();
         surfaceCloud->clear();
+        RealsurfaceCloud->clear();
 
         pcl::PointCloud<PointType>::Ptr surfaceCloudScan(new pcl::PointCloud<PointType>());
         pcl::PointCloud<PointType>::Ptr surfaceCloudScanDS(new pcl::PointCloud<PointType>());
+        
 
         for (int i = 0; i < N_SCAN; i++)
         {
@@ -230,6 +236,9 @@ public:
                     if (cloudLabel[k] <= 0){
                         surfaceCloudScan->push_back(extractedCloud->points[k]);
                     }
+                    if (cloudLabel[k] < 0){
+                        RealsurfaceCloud->push_back(extractedCloud->points[k]);
+                    }
                 }
             }
 
@@ -256,6 +265,7 @@ public:
         // save newly extracted features
         cloudInfo.cloud_corner = publishCloud(pubCornerPoints,  cornerCloud,  cloudHeader.stamp, lidarFrame);
         cloudInfo.cloud_surface = publishCloud(pubSurfacePoints, surfaceCloud, cloudHeader.stamp, lidarFrame);
+        cloudInfo.cloud_realsurface=publishCloud(pubRealSurfacePoints,RealsurfaceCloud,cloudHeader.stamp,lidarFrame);
         // publish to mapOptimization
         pubLaserCloudInfo->publish(cloudInfo);
     }
