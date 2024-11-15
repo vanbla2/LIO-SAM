@@ -5,13 +5,14 @@ RUN apt-get update \
     && curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - \
     && apt-get update \
     && apt install -y python3-colcon-common-extensions \
-    && apt-get install -y ros-humble-navigation2 \
-    && apt-get install -y ros-humble-robot-localization \
-    && apt-get install -y ros-humble-robot-state-publisher \
+    && apt install -y ros-humble-navigation2 \
+    && apt install -y ros-humble-robot-localization \
+    && apt install -y ros-humble-robot-state-publisher \
     && apt install -y ros-humble-perception-pcl \
   	&& apt install -y ros-humble-pcl-msgs \
   	&& apt install -y ros-humble-vision-opencv \
   	&& apt install -y ros-humble-xacro \
+    && apt install -y ros-humble-rosbag2-storage-mcap \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
