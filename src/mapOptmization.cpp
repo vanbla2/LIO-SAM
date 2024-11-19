@@ -231,7 +231,7 @@ public:
             downSizeFilterCorner.setLeafSize(mappingCornerLeafSize, mappingCornerLeafSize, mappingCornerLeafSize);
             downSizeFilterSurf.setLeafSize(mappingSurfLeafSize, mappingSurfLeafSize, mappingSurfLeafSize);
 
-            std::ofstream pathFile(saveMapDirectory + "/path.txt");
+            std::ofstream pathFile(saveMapDirectory + "/path.csv");
             if (!pathFile.is_open()) {
                 cerr << "Failed to open file for saving path." << endl;
                 res->success = false;  // Indica che il salvataggio non è andato a buon fine
@@ -251,7 +251,7 @@ public:
             }      
 
             pathFile.close();
-            cout << "Path saved successfully to " << saveMapDirectory + "/path.txt" << endl;    
+            cout << "Path saved successfully to " << saveMapDirectory + "/path.csv" << endl;    
             cout << "****************************************************" << endl;
             cout << "Saving map to pcd files completed\n" << endl;
             return;
