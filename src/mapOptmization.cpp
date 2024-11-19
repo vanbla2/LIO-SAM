@@ -241,12 +241,12 @@ public:
             for (const auto& poseStamped : globalPath.poses) {
                     const auto& pose = poseStamped.pose;
 
-                pathFile << pose.position.x << " "
-                         << pose.position.y << " "
-                         << pose.position.z << " "
-                         << pose.orientation.x << " "
-                         << pose.orientation.y << " "
-                         << pose.orientation.z << " "
+                pathFile << pose.position.x << " ,"
+                         << pose.position.y << " ,"
+                         << pose.position.z << " ,"
+                         << pose.orientation.x << " ,"
+                         << pose.orientation.y << " ,"
+                         << pose.orientation.z << " ,"
                          << pose.orientation.w << "\n";
             }      
 
