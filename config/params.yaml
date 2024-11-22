@@ -19,8 +19,8 @@
 
     useImuHeadingInitialization: true            # if using GPS data, set to "true"
     useGpsElevation: false                       # if GPS elevation is bad, set to "false"
-    gpsCovThreshold: 2.0                         # 2.0 m^2, threshold for using GPS data
-    poseCovThreshold: 5.0                       # 25.0 m^2, threshold for using GPS data
+    gpsCovThreshold: 0.005                         # 2.0 m^2, threshold for using GPS data
+    poseCovThreshold: 1.0                     # 25.0 m^2, threshold for using GPS data
  
     # Export settings
 
@@ -88,24 +88,24 @@
 
     surroundingkeyframeAddingDistThreshold: 1.0   # meters, regulate keyframe adding threshold
     surroundingkeyframeAddingAngleThreshold: 0.2  # radians, regulate keyframe adding threshold
-    surroundingKeyframeDensity: 2.0               # meters, downsample surrounding keyframe poses   
+    surroundingKeyframeDensity: 1.0               # 2.0 meters, downsample surrounding keyframe poses   
     surroundingKeyframeSearchRadius: 50.0         # meters, within n meters scan-to-map optimization (when loop closure disabled)
  
     # Loop closure
 
-    loopClosureEnableFlag: false                  # enable loop closure
-    loopClosureFrequency: 1.0                     # Hz, regulate loop closure constraint add frequency
-    surroundingKeyframeSize: 50                   # submap size (when loop closure enabled)
-    historyKeyframeSearchRadius: 15.0             # meters, key frame that is within n meters from current pose will be considerd for loop closure
+    loopClosureEnableFlag: true                  # enable loop closure
+    loopClosureFrequency: 5.0                     #1.0 Hz, regulate loop closure constraint add frequency
+    surroundingKeyframeSize: 100                   # submap size (when loop closure enabled)
+    historyKeyframeSearchRadius: 1000.0            # 50 meters, key frame that is within n meters from current pose will be considerd for loop closure
 
-    historyKeyframeSearchTimeDiff: 30.0           # seconds, key frame that is n seconds older will be considered for loop closure
+    historyKeyframeSearchTimeDiff: 3000.0           # seconds, key frame that is n seconds older will be considered for loop closure
     historyKeyframeSearchNum: 25                  # number of history key frames will be fused into a submap for loop closure
-    historyKeyframeFitnessScore: 0.3              # icp threshold, the smaller the better alignment
+    historyKeyframeFitnessScore: 0.2              # 0.3 icp threshold, the smaller the better alignment
  
     # Visualization
 
     globalMapVisualizationSearchRadius: 1000.0    # meters, global map visualization radius
     globalMapVisualizationPoseDensity: 10.0       # meters, global map visualization keyframe density
-    globalMapVisualizationLeafSize: 1.0           # meters, global map visualization cloud density
+    globalMapVisualizationLeafSize: 0.5           # meters, global map visualization cloud density
 
  
