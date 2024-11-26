@@ -5,7 +5,7 @@
 
     pointCloudTopic: "/ouster_sensor_center/points"     # Point cloud data
     imuTopic: "/oxts/imu"                               # IMU data
-    odomTopic: "/oxts/odometry"                         # IMU pre-preintegration odometry, same frequency as IMU
+    odomTopic: "odometry"                         # IMU pre-preintegration odometry, same frequency as IMU
     gpsTopic: "odometry/gps"                            # GPS odometry topic from navsat, see module_navsat.launch file
  
     # Frames
@@ -19,8 +19,8 @@
 
     useImuHeadingInitialization: true            # if using GPS data, set to "true"
     useGpsElevation: false                       # if GPS elevation is bad, set to "false"
-    gpsCovThreshold: 2.0                         # 2.0 m^2, threshold for using GPS data
-    poseCovThreshold: 5.0                       # 25.0 m^2, threshold for using GPS data
+    gpsCovThreshold: 0.005                         # 2.0 m^2, threshold for using GPS data
+    poseCovThreshold: 1.0                       # 25.0 m^2, threshold for using GPS data
  
     # Export settings
 
@@ -76,7 +76,7 @@
  
     # robot motion constraint (in case you are using a 2D robot)
 
-    z_tollerance: 1000.0                          # meters
+    z_tollerance: 0.0                          # meters
     rotation_tollerance: 1000.0                   # radians
  
     # CPU Params
@@ -104,7 +104,7 @@
  
     # Visualization
 
-    globalMapVisualizationSearchRadius: 1000.0    # meters, global map visualization radius
+    globalMapVisualizationSearchRadius: 25.0    # meters, global map visualization radius
     globalMapVisualizationPoseDensity: 10.0       # meters, global map visualization keyframe density
     globalMapVisualizationLeafSize: 1.0           # meters, global map visualization cloud density
 
