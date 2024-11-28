@@ -165,7 +165,7 @@ public:
     pcl::PointCloud<PointType>::Ptr cloudGlobalMapDS;
     pcl::PointCloud<PointType>::Ptr cloudScanForInitialize;
 
-    rclcpp::Subscription<geometry_msgs::msg::PoseWithCovariance>::SharedPtr subIniPoseFromRviz;
+    rclcpp::Subscription<geometry_msgs::msg::PoseWithCovarianceStamped>::SharedPtr subIniPoseFromRviz;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubLaserCloudInWorld;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubMapWorld;
     //ros::Publisher fortest_publasercloudINWorld;
@@ -414,10 +414,10 @@ public:
         for (int i = 0; i < cloudSize; ++i){
 
             const auto &pointFrom = &cloudIn->points[i];
-            cloudOut->points[i].x = transCur(0,0) * pointFrom.x + transCur(0,1) * pointFrom.y + transCur(0,2) * pointFrom.z + transCur(0,3);
-            cloudOut->points[i].y = transCur(1,0) * pointFrom.x + transCur(1,1) * pointFrom.y + transCur(1,2) * pointFrom.z + transCur(1,3);
-            cloudOut->points[i].z = transCur(2,0) * pointFrom.x + transCur(2,1) * pointFrom.y + transCur(2,2) * pointFrom.z + transCur(2,3);
-            cloudOut->points[i].intensity = pointFrom.intensity;
+            cloudOut->points[i].x = transCur(0,0) * pointFrom->x + transCur(0,1) * pointFrom->y + transCur(0,2) * pointFrom->z + transCur(0,3);
+            cloudOut->points[i].y = transCur(1,0) * pointFrom->x + transCur(1,1) * pointFrom->y + transCur(1,2) * pointFrom->z + transCur(1,3);
+            cloudOut->points[i].z = transCur(2,0) * pointFrom->x + transCur(2,1) * pointFrom->y + transCur(2,2) * pointFrom->z + transCur(2,3);
+            cloudOut->points[i].intensity = pointFrom->intensity;
         }
         return cloudOut;
     }
@@ -1521,7 +1521,7 @@ public:
 
         // Align cloud
         //3. calculate the tranform of odom relative to world
-	//Eigen::Affine3f transodomToWorld_init = pcl::getTransformation(0,0,0,0,0,0);
+	    //Eigen::Affine3f transodomToWorld_init = pcl::getTransformation(0,0,0,0,0,0);
         mtxtranformOdomToWorld.lock();
         Eigen::Affine3f transodomToWorld_init = pcl::getTransformation(tranformOdomToWorld[3], tranformOdomToWorld[4],tranformOdomToWorld[5],tranformOdomToWorld[0],tranformOdomToWorld[1],tranformOdomToWorld[2]);
         mtxtranformOdomToWorld.unlock();
@@ -1565,9 +1565,7 @@ public:
         //publish global map
         publishCloud(pubMapWorld, cloudGlobalMapDS, timeLaserInfoStamp, "map");//publish world map
 
-        if (icp.hasConverged() == true && icp.getFitnessScore() < historyKeyframeFitnessScore)tf2::Quaternion q_odomTo_map;
-q_odomTo_map.setRPY(roll, pitch, yaw);  // Impostazione di roll, pitch e yaw
-
+        if (icp.hasConverged() == true && icp.getFitnessScore() < historyKeyframeFitnessScore)
         {
             geometry_msgs::msg::PoseStamped pose_odomTo_map;
             tf2::Quaternion q_odomTo_map;
@@ -1659,23 +1657,23 @@ q_odomTo_map.setRPY(roll, pitch, yaw);  // Impostazione di roll, pitch e yaw
 
 int main(int argc, char** argv)
 {
-    rclcpp::init(argc, argv); 
+    rclcpp::init(argc, argv);
 
     rclcpp::NodeOptions options;
     options.use_intra_process_comms(true);
     rclcpp::executors::SingleThreadedExecutor exec;
-    RCLCPP_INFO(this->get_logger(), "\033[1;32m----> Map Optimization Started.\033[0m");
+
     auto MO = std::make_shared<mapOptimization>(options);
     exec.add_node(MO);
-    //std::thread loopthread(&mapOptimization::loopClosureThread, &MO);
+
     RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "\033[1;32m----> Map Optimization Started.\033[0m");
-    //std::thread visualizeMapThread(&mapOptimization::visualizeGlobalMapThread, &MO);
-    std::thread localizeInWorldThread(&mapOptimization::globalLocalizeThread, &MO);
-    rclcpp::spin();
-    //std::thread loopthread(&mapOptimization::loopClosureThread, MO);
-    //std::thread visualizeMapThread(&mapOptimization::visualizeGlobalMapThread, MO);
+
     exec.spin();
+
     rclcpp::shutdown();
+
+    std::thread localizeInWorldThread(&mapOptimization::globalLocalizeThread, MO);
+
     localizeInWorldThread.join();
 
     return 0;
