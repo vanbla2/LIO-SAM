@@ -98,13 +98,13 @@
     surroundingKeyframeSize: 100                   # submap size (when loop closure enabled)
     historyKeyframeSearchRadius: 1000.0            # 50 meters, key frame that is within n meters from current pose will be considerd for loop closure
 
-    historyKeyframeSearchTimeDiff: 3000.0           # seconds, key frame that is n seconds older will be considered for loop closure
+    historyKeyframeSearchTimeDiff: 100.0           # seconds, key frame that is n seconds older will be considered for loop closure
     historyKeyframeSearchNum: 25                  # number of history key frames will be fused into a submap for loop closure
     historyKeyframeFitnessScore: 0.2              # 0.3 icp threshold, the smaller the better alignment
  
     # Visualization
 
-    globalMapVisualizationSearchRadius: 1000.0    # meters, global map visualization radius
+    globalMapVisualizationSearchRadius: 50.0    # meters, global map visualization radius
     globalMapVisualizationPoseDensity: 10.0       # meters, global map visualization keyframe density
     globalMapVisualizationLeafSize: 0.5           # meters, global map visualization cloud density
 
